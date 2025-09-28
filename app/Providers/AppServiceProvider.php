@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\URL; // <-- Make sure this is imported
+
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,11 +17,13 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+
     public function boot(): void
     {
-        //
+        // Force HTTPS scheme on production
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+        // ... other boot logic
     }
 }
